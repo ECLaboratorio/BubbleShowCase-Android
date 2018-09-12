@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.elconfidencial.bubbleshowcase.MainActivity">
+
+    <Button
+        android:id="@+id/buttonSimpleShowCase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Simple showcase"
+        app:layout_constraintBottom_toTopOf="@+id/buttonColorShowCase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonColorShowCase"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Custom color"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTextSizeShowCase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSimpleShowCase" />
+
+    <Button
+        android:id="@+id/buttonTextSizeShowCase"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Text size"
+        app:layout_constraintBottom_toTopOf="@+id/buttonArrowLeftShowCase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonColorShowCase" />
+
+    <Button
+        android:id="@+id/buttonArrowLeftShowCase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Left arrow"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEventListener"
+        app:layout_constraintEnd_toStartOf="@+id/buttonArrowRightShowCase"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTextSizeShowCase" />
+
+    <Button
+        android:id="@+id/buttonArrowRightShowCase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right arrow"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEventListener"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonArrowLeftShowCase"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTextSizeShowCase" />
+
+    <Button
+        android:id="@+id/buttonEventListener"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listener"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSequence"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonArrowLeftShowCase" />
+
+    <Button
+        android:id="@+id/buttonSequence"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="Sequence"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEventListener" />
+
+</android.support.constraint.ConstraintLayout>

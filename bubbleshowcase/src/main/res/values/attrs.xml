@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlayFairDisplayTextView">
+        <attr name="textfont" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="ShowCaseMessageView">
+        <attr name="iconImage" format="reference" />
+        <attr name="iconClose" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="text" format="string" />
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+</resources>
