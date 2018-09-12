@@ -1,0 +1,68 @@
+# BubbleShowCase - Android
+
+BubbleShowCase is an elegant and simple framework developed in Kotlin (usable also in Java) that let you to use informative bubbles to help your users pointing out different features of your application or in your App onboarding. The basic use of the framework consists on a target element passed as input which will be highlighted over a translucent background and pointed out by a customizable bubble.
+
+## Getting started
+
+TO-DO
+
+## Usage
+### Basic sample
+
+Create a new BubbleShowCase is pretty straightforward. It is only needed an instance of the current activity and the target view to carry it out.
+```kotlin
+BubbleShowCaseBuilder(this) //Activity instance
+                .title("foo") //Any title for the bubble view
+                .targetView(view) //View to point out
+                .show() //Display the ShowCase
+```
+**NOTE:** If the target is not passed as input, the bubble will be located by default at the center of the screen without arrows.
+
+### Custom BubbleShowCase
+
+Below it is showed an example of a BubbleShowCase will all the possible input params which can be custom.
+
+```kotlin
+BubbleShowCaseBuilder(this) //Activity instance
+                .title("foo") //Any title for the bubble view
+                .subtitle("bar") //More detailed description
+                .arrowPosition(BubbleShowCase.ArrowPosition.RIGHT) //You can force the position of the arrow to change the location of the bubble.
+                .backgroundColor(Color.GREEN) //Bubble background color
+                .textColor(Color.BLACK) //Bubble Text color
+                .titleTextSize(17) //Title text size in SP (default value 16sp)
+                .subtitleTextSize(15) //Subtitle text size in SP (default value 14sp)
+                .image(imageDrawable) //Bubble main image
+                .closeActionImage(CloseImageDrawable) //Custom close action image
+                .listener(listener(object : BubbleShowCaseListener{ //Listener for user actions
+                    override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
+                        //Called when the user clicks the target
+                    }
+                    override fun onClose(bubbleShowCase: BubbleShowCase) {
+                        //Called when the user clicks the close button
+                    }
+                })
+                .targetView(buttonArrowRightShowCase) //View to point out
+                .show() //Display the ShowCase
+``
+
+**NOTE:** Set more than one arrow position is allowed. For that case, the arrows will be painted and the bubble will be located at the center of the screen. It can be useful to indicate a swipe or a scroll movement.
+
+### BubbleShowCaseSequence sample
+
+It has been also implemented a BubbleShowCaseSequence object in order to chain more than one BubbleShowCase. It could be useful when it is desired to point out several things at the same moment.
+```kotlin
+BubbleShowCaseSequence()
+                .addShowCase(firstShowCase) //First BubbleShowCase to show
+                .addShowCase(secondShowCase) // This one will be showed when firstShowCase is closed
+                .addShowCase(thirdShowCase) // This one will be showed when secondShowCase is closed
+                .show() //Display the ShowCaseSequence
+```
+
+For more information, please check our [sample app](/Sample).
+If you have any issues or feedback, please visit [issue section](https://github.com/ECLaboratorio/BubbleShowCase-Android/issues).
+Please feel free to collaborate with us making this framework as best as possible.
+
+## License
+
+`BubbleShowCase-Android` is available under the MIT license. See the [LICENSE](/LICENSE) file for more info.
+
