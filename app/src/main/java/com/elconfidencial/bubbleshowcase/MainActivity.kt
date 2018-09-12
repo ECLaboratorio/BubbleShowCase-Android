@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         return BubbleShowCaseBuilder(this)
                 .title("Custom your Showcase style!")
                 .subtitle("It is possible to change the text color, background ... and you can even add an image into your BubbleShowcase.")
-                .backgroundColor(ContextCompat.getColor(this, R.color.white))
+                .backgroundColor(ContextCompat.getColor(this, R.color.colorBlueGray))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_color)!!)
                 .closeActionImage(ContextCompat.getDrawable(this, R.drawable.ic_close_black)!!)
                 .textColor(ContextCompat.getColor(this, R.color.colorBlack))
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getTextSizeShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
-                .title("Modify text sizes!")
+                .title("Change text sizes!")
                 .subtitle("You can choose the best text size for you.")
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorTeal))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_format_size)!!)
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getArrowLeftShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
-                .title("Force the position of your BubbleShowCase!")
-                .subtitle("You can specify in which side you want the arrow, and the BubbleShowCase will be located depending on it.")
+                .title("Force the position of the bubble!")
+                .subtitle("You only have to specify in which side you want the arrow, and the bubble will be located depending on it.")
                 .arrowPosition(BubbleShowCase.ArrowPosition.LEFT)
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorRed))
                 .targetView(buttonArrowLeftShowCase)
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getArrowRightShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
-                .title("For example, I want the arrow on the right side in this bubble.")
+                .title("I want the arrow on the right side in this bubble.")
                 .arrowPosition(BubbleShowCase.ArrowPosition.RIGHT)
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorPink))
                 .targetView(buttonArrowRightShowCase)
