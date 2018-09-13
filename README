@@ -16,11 +16,11 @@ BubbleShowCaseBuilder(this) //Activity instance
                 .targetView(view) //View to point out
                 .show() //Display the ShowCase
 ```
-**NOTE:** If the target is not passed as input, the bubble will be located by default at the center of the screen without arrows.
+**NOTE:** If the target is not passed as input, the bubble will be located by default in the middle of the screen without arrows.
 
 ### Custom BubbleShowCase
 
-Below it is showed an example of a BubbleShowCase will all the possible input params which can be custom.
+Below it is showed an example of a BubbleShowCase will all possible input params which can be custom.
 
 ```kotlin
 BubbleShowCaseBuilder(this) //Activity instance
@@ -43,18 +43,18 @@ BubbleShowCaseBuilder(this) //Activity instance
                 })
                 .targetView(buttonArrowRightShowCase) //View to point out
                 .show() //Display the ShowCase
-``
+```
 
-**NOTE:** Set more than one arrow position is allowed. For that case, the arrows will be painted and the bubble will be located at the center of the screen. It can be useful to indicate a swipe or a scroll movement.
+**NOTE:** Set more than one arrow position is allowed. For that case, the arrows will be painted and the bubble will be located in the middle of the screen. It can be useful to indicate a swipe or a scroll movement.
 
 ### BubbleShowCaseSequence sample
 
 It has been also implemented a BubbleShowCaseSequence object in order to chain more than one BubbleShowCase. It could be useful when it is desired to point out several things at the same moment.
 ```kotlin
 BubbleShowCaseSequence()
-                .addShowCase(firstShowCase) //First BubbleShowCase to show
-                .addShowCase(secondShowCase) // This one will be showed when firstShowCase is closed
-                .addShowCase(thirdShowCase) // This one will be showed when secondShowCase is closed
+                .addShowCase(firstShowCaseBuilder) //First BubbleShowCase to show
+                .addShowCase(secondShowCaseBuilder) // This one will be showed when firstShowCase is closed
+                .addShowCase(thirdShowCaseBuilder) // This one will be showed when secondShowCase is closed
                 .show() //Display the ShowCaseSequence
 ```
 

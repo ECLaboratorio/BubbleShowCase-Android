@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCustomColorShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
-                .title("Custom your Showcase style!")
-                .subtitle("It is possible to change the text color, background ... and you can even add an image into your BubbleShowcase.")
+                .title("Custom your bubble style!")
+                .subtitle("It is possible to change the text color, background ... and you can even add an image into your bubble.")
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorBlueGray))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_color)!!)
                 .closeActionImage(ContextCompat.getDrawable(this, R.drawable.ic_close_black)!!)
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private fun getTextSizeShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Change text sizes!")
-                .subtitle("You can choose the best text size for you.")
+                .subtitle("You can also choose the best text size for you.")
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorTeal))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_format_size)!!)
                 .titleTextSize(18)
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getArrowRightShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
-                .title("I want the arrow on the right side in this bubble.")
+                .title("Arrow set on right side this time :)")
                 .arrowPosition(BubbleShowCase.ArrowPosition.RIGHT)
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorPink))
                 .targetView(buttonArrowRightShowCase)
