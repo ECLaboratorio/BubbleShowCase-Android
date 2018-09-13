@@ -3,6 +3,7 @@
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
+/bubbleshowcase/keystore.gradle
 .DS_Store
 /build
 /captures

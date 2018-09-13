@@ -1,15 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'maven-publish'
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-    }
-}
 
 
 android {
@@ -36,6 +32,11 @@ android {
 
 }
 
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -50,31 +51,4 @@ repositories {
 }
 
 
-//LIBRARY MAVEN VARIABLES
-ext {
-    bintrayRepo = 'Laboratorio-apps'
-    bintrayName = 'BubbleShowCase'
-
-    publishedGroupId = 'com.elconfidencial.android'
-    libraryName = 'BubbleShowCase'
-    artifact = 'bubbleshowcase'
-
-    libraryDescription = 'BubbleShowCase is a framework that let you to use informative bubbles to help your users pointing out different App features.'
-
-    siteUrl = 'https://github.com/ECLaboratorio/BubbleShowCase-Android'
-    gitUrl = 'https://github.com/ECLaboratorio/BubbleShowCase-Android.git'
-
-    libraryVersion = '1.0.0'
-
-    developerId = 'laboratorioec'
-    developerName = 'Laboratorio El Confidencial'
-    developerEmail = 'tecnicoelconfidencial@gmail.com'
-
-    licenseName = 'The MIT License'
-    licenseUrl = 'https://opensource.org/licenses/MIT'
-    allLicenses = ["MIT"]
-}
-
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-apply from: 'maven_upload_script.gradle'
+apply from: 'deploy.gradle'

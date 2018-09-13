@@ -1,0 +1,78 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: 'keystore.gradle'
+
+//This file was created following instructions from: https://notes.devlabs.bg/beginners-guide-for-publishing-a-kotlin-library-to-jcenter-41272bfc214
+
+ext{
+    groupId = 'com.elconfidencial.bubbleshowcase'
+    artifactId = 'bubbleshowcase'
+    libraryVersion = '1.0.0'
+}
+
+version = libraryVersion
+group = groupId
+
+bintray{
+    user = 'laboratorioec'
+    key = bintray_api_key //Defined in keystore.gradle file
+    configurations = ['archives']
+    publish = true
+    override = true
+    pkg {
+        repo = "Laboratorio-apps"
+        name = "BubbleShowCase"
+        version {
+            name = libraryVersion
+        }
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId groupId
+            artifactId artifactId
+            version libraryVersion
+            name artifactId
+        }
+    }
+}
+
+if (project.hasProperty("kotlin")) { //Kotlin libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc, dependsOn: dokka) {
+
+    }
+} else if (project.hasProperty("android")) {
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+} else { // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    // options.encoding = 'UTF-8'
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
