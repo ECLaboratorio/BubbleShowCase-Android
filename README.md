@@ -32,12 +32,12 @@ Below it is showed an example of a BubbleShowCase will all possible input params
 ```kotlin
 BubbleShowCaseBuilder(this) //Activity instance
                 .title("foo") //Any title for the bubble view
-                .subtitle("bar") //More detailed description
+                .description("bar") //More detailed description
                 .arrowPosition(BubbleShowCase.ArrowPosition.RIGHT) //You can force the position of the arrow to change the location of the bubble.
                 .backgroundColor(Color.GREEN) //Bubble background color
                 .textColor(Color.BLACK) //Bubble Text color
                 .titleTextSize(17) //Title text size in SP (default value 16sp)
-                .subtitleTextSize(15) //Subtitle text size in SP (default value 14sp)
+                .descriptionTextSize(15) //Subtitle text size in SP (default value 14sp)
                 .image(imageDrawable) //Bubble main image
                 .closeActionImage(CloseImageDrawable) //Custom close action image
                 .listener(listener(object : BubbleShowCaseListener{ //Listener for user actions

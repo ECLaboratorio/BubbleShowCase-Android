@@ -47,6 +47,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private val mTextColor: Int? = builder.mTextColor
     private val mTitleTextSize: Int? = builder.mTitleTextSize
     private val mSubtitleTextSize: Int? = builder.mSubtitleTextSize
+    private val mDisableTargetClick: Boolean = builder.mDisableTargetClick
     private val mArrowPositionList: MutableList<ArrowPosition> = builder.mArrowPositionList
     private val mTargetView: WeakReference<View>? = builder.mTargetView
     private val mBubbleShowCaseListener: BubbleShowCaseListener?  = builder.mBubbleShowCaseListener
@@ -152,7 +153,8 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         val targetScreenshotView = ImageView(mActivity.get()!!)
         targetScreenshotView.setImageBitmap(targetScreenshot)
         targetScreenshotView.setOnClickListener {
-            dismiss()
+            if(!mDisableTargetClick)
+                dismiss()
             mBubbleShowCaseListener?.onTargetClick(this)
         }
 

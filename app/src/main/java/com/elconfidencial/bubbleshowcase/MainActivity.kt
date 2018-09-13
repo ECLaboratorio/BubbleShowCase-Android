@@ -29,14 +29,14 @@ class MainActivity : AppCompatActivity() {
     private fun getSimpleShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Welcome!!!")
-                .subtitle("This is a simple BubbleShowCase with default values.")
+                .description("This is a simple BubbleShowCase with default values.")
                 .targetView(buttonSimpleShowCase)
     }
 
     private fun getCustomColorShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Custom your bubble style!")
-                .subtitle("It is possible to change the text color, background ... and you can even add an image into your bubble.")
+                .description("It is possible to change the text color, background ... and you can even add an image into your bubble.")
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorBlueGray))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_color)!!)
                 .closeActionImage(ContextCompat.getDrawable(this, R.drawable.ic_close_black)!!)
@@ -47,18 +47,18 @@ class MainActivity : AppCompatActivity() {
     private fun getTextSizeShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Change text sizes!")
-                .subtitle("You can also choose the best text size for you.")
+                .description("You can also choose the best text size for you.")
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorTeal))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_format_size)!!)
                 .titleTextSize(18)
-                .subtitleTextSize(16)
+                .descriptionTextSize(16)
                 .targetView(buttonTextSizeShowCase)
     }
 
     private fun getArrowLeftShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Force the position of the bubble!")
-                .subtitle("You only have to specify in which side you want the arrow, and the bubble will be located depending on it.")
+                .description("You only have to specify in which side you want the arrow, and the bubble will be located depending on it.")
                 .arrowPosition(BubbleShowCase.ArrowPosition.LEFT)
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorRed))
                 .targetView(buttonArrowLeftShowCase)
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     private fun getListenerShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Listen user actions!")
-                .subtitle("You can detect when the user interacts with the different view elements to act consequently.")
+                .description("You can detect when the user interacts with the different view elements to act consequently.")
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorOrange))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_sentiment_satisfied)!!)
                 .listener(object : BubbleShowCaseListener{

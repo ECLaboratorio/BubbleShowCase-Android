@@ -21,6 +21,7 @@ class BubbleShowCaseBuilder{
     internal var mTextColor: Int? = null
     internal var mTitleTextSize: Int? = null
     internal var mSubtitleTextSize: Int? = null
+    internal var mDisableTargetClick: Boolean = false
     internal var mIsFirstOfSequence: Boolean? = null
     internal var mIsLastOfSequence: Boolean? = null
     internal val mArrowPositionList = ArrayList<BubbleShowCase.ArrowPosition>()
@@ -48,7 +49,7 @@ class BubbleShowCaseBuilder{
     /**
      * Additional description of the BubbleShowCase. This text has a regular format
      */
-    fun subtitle(subtitle: String): BubbleShowCaseBuilder {
+    fun description(subtitle: String): BubbleShowCaseBuilder {
         mSubtitle = subtitle
         return this
     }
@@ -99,10 +100,10 @@ class BubbleShowCaseBuilder{
     }
 
     /**
-     * Subtitle text size in SP.
+     * Description text size in SP.
      * - Default value -> 14 sp
      */
-    fun subtitleTextSize(textSize: Int): BubbleShowCaseBuilder {
+    fun descriptionTextSize(textSize: Int): BubbleShowCaseBuilder {
         mSubtitleTextSize = textSize
         return this
     }
@@ -113,6 +114,15 @@ class BubbleShowCaseBuilder{
      */
     fun targetView(targetView: View): BubbleShowCaseBuilder {
         mTargetView = WeakReference(targetView)
+        return this
+    }
+
+    /**
+     * If this variable is true, when user clicks on the target, the showcase will not be dismissed
+     *  Default value -> false
+     */
+    fun disableTargetClick(isDisabled: Boolean): BubbleShowCaseBuilder{
+        mDisableTargetClick = isDisabled
         return this
     }
 
