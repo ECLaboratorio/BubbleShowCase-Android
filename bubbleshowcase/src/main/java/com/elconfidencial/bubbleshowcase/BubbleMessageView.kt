@@ -228,6 +228,9 @@ class BubbleMessageView : ConstraintLayout {
 
     //END REGION
 
+    /**
+     * Builder for BubbleMessageView class
+     */
     class Builder{
         lateinit var mContext: WeakReference<Context>
         var mTargetViewScreenLocation: RectF? = null
@@ -307,5 +310,4 @@ class BubbleMessageView : ConstraintLayout {
             return BubbleMessageView(mContext.get()!!, this)
         }
     }
-
 }
