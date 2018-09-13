@@ -72,4 +72,3 @@ Please feel free to collaborate with us making this framework as best as possibl
 ## License
 
 `BubbleShowCase-Android` is available under the MIT license. See the [LICENSE](/LICENSE) file for more info.
-
