@@ -1,0 +1,14 @@
+Steps:
+
+1. Push all changes to Github https://github.com/ECLaboratorio/BubbleShowCase-Android
+2. Check if you have the file keystore.gradle. If not, create it with this:
+
+    ext {
+        bintray_api_key = 'API KEY' // Get it from here https://bintray.com/profile/edit
+    }
+
+3. Go to deploy.gradle: Upgrade libraryVersion number
+4. Execute this command in terminal: "gradle install" to build the new version
+5. Execute this command in terminal: "gradle bintrayUpload" to upload changes
+
+For more information, check this blog: https://notes.devlabs.bg/beginners-guide-for-publishing-a-kotlin-library-to-jcenter-41272bfc214

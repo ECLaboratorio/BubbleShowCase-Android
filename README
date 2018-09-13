@@ -1,10 +1,17 @@
 # BubbleShowCase - Android
+ [ ![Download](https://api.bintray.com/packages/laboratorioec/Laboratorio-apps/BubbleShowCase/images/download.svg) ](https://bintray.com/laboratorioec/Laboratorio-apps/BubbleShowCase/_latestVersion)
 
 BubbleShowCase is an elegant and simple framework developed in Kotlin (usable also in Java) that let you to use informative bubbles to help your users pointing out different features of your application or in your App onboarding. The basic use of the framework consists on a target element passed as input which will be highlighted over a translucent background and pointed out by a customizable bubble.
 
+<img src="resources/usage_sample.gif" alt="GIF" height="700"/>
+
 ## Getting started
 
-TO-DO
+Add the library into your proyect is really easy, you just need to add this line in dependencies block in your app Gradle:
+```groovy
+implementation 'com.elconfidencial.bubbleshowcase:bubbleshowcase:LATEST_VERSION'
+```
+**NOTE:** You can check the LATEST_VERSION in the version badge at the top of this file.
 
 ## Usage
 ### Basic sample
@@ -45,7 +52,7 @@ BubbleShowCaseBuilder(this) //Activity instance
                 .show() //Display the ShowCase
 ```
 
-**NOTE:** Set more than one arrow position is allowed. For that case, the arrows will be painted and the bubble will be located in the middle of the screen. It can be useful to indicate a swipe or a scroll movement.
+**NOTE:** Set more than one arrow position is allowed. For that case, the arrows will be painted and the bubble will be located in the middle of the screen. It could be useful to indicate a swipe or a scroll movement.
 
 ### BubbleShowCaseSequence sample
 
@@ -53,12 +60,12 @@ It has been also implemented a BubbleShowCaseSequence object in order to chain m
 ```kotlin
 BubbleShowCaseSequence()
                 .addShowCase(firstShowCaseBuilder) //First BubbleShowCase to show
-                .addShowCase(secondShowCaseBuilder) // This one will be showed when firstShowCase is closed
-                .addShowCase(thirdShowCaseBuilder) // This one will be showed when secondShowCase is closed
+                .addShowCase(secondShowCaseBuilder) // This one will be showed when firstShowCase is dismissed
+                .addShowCase(thirdShowCaseBuilder) // This one will be showed when secondShowCase is dismissed
                 .show() //Display the ShowCaseSequence
 ```
 
-For more information, please check our [sample app](/Sample).
+For more information and examples, please check our [sample app](/app).
 If you have any issues or feedback, please visit [issue section](https://github.com/ECLaboratorio/BubbleShowCase-Android/issues).
 Please feel free to collaborate with us making this framework as best as possible.
 
