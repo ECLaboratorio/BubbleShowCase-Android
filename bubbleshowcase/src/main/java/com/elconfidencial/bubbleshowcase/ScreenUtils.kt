@@ -62,7 +62,12 @@ object ScreenUtils {
     }
 
     fun isVisibleOnScreen(targetView: View?): Boolean {
-        return if (targetView!=null) getAxisXpositionOfViewOnScreen(targetView) != 0 || getAxisYpositionOfViewOnScreen(targetView) != 0 else false
+        if(targetView!=null){
+            if(getAxisXpositionOfViewOnScreen(targetView) >= 0 && getAxisYpositionOfViewOnScreen(targetView) >= 0){
+                return getAxisXpositionOfViewOnScreen(targetView) != 0 || getAxisYpositionOfViewOnScreen(targetView) != 0
+            }
+        }
+        return false
     }
 
     fun getStatusBarHeight(context: Context): Int {
