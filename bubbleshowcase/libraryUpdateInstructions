@@ -9,6 +9,6 @@ Steps:
 
 3. Go to deploy.gradle: Upgrade libraryVersion number
 4. Execute this command in terminal: "gradle install" to build the new version
-5. Execute this command in terminal: "gradle bintrayUpload" to upload changes
+5. Execute this command in terminal: "gradle bintrayUpload" to upload changes in Bintray. You can check if everything is correct in https://bintray.com/laboratorioec/Laboratorio-apps/BubbleShowCase
 
 For more information, check this blog: https://notes.devlabs.bg/beginners-guide-for-publishing-a-kotlin-library-to-jcenter-41272bfc214

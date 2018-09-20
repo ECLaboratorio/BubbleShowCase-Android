@@ -103,7 +103,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
             foregroundLayoutWithBlur = null
         } else {
             //Remove all the views created over the foreground layout waiting for the next BubbleShowCsse in the sequence
-            foregroundLayoutWithBlur!!.removeAllViews()
+            foregroundLayoutWithBlur?.removeAllViews()
         }
     }
 
