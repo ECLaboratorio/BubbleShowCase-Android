@@ -22,6 +22,7 @@ class BubbleShowCaseBuilder{
     internal var mTitleTextSize: Int? = null
     internal var mSubtitleTextSize: Int? = null
     internal var mDisableTargetClick: Boolean = false
+    internal var mShowOnce: String? = null
     internal var mIsFirstOfSequence: Boolean? = null
     internal var mIsLastOfSequence: Boolean? = null
     internal val mArrowPositionList = ArrayList<BubbleShowCase.ArrowPosition>()
@@ -105,6 +106,15 @@ class BubbleShowCaseBuilder{
      */
     fun descriptionTextSize(textSize: Int): BubbleShowCaseBuilder {
         mSubtitleTextSize = textSize
+        return this
+    }
+
+    /**
+     * If an unique id is passed in this function, this BubbleShowCase will only be showed once
+     * - ID to identify the BubbleShowCase
+     */
+    fun showOnce(id: String): BubbleShowCaseBuilder {
+        mShowOnce = id
         return this
     }
 

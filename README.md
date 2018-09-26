@@ -41,6 +41,7 @@ BubbleShowCaseBuilder(this) //Activity instance
                 .descriptionTextSize(15) //Subtitle text size in SP (default value 14sp)
                 .image(imageDrawable) //Bubble main image
                 .closeActionImage(CloseImageDrawable) //Custom close action image
+                .showOnce("BUBBLE_SHOW_CASE_ID") //Id to show only once the BubbleShowCase
                 .listener(listener(object : BubbleShowCaseListener{ //Listener for user actions
                     override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
                         //Called when the user clicks the target

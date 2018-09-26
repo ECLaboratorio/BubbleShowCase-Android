@@ -3,6 +3,8 @@ package com.elconfidencial.bubbleshowcase
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
@@ -21,6 +23,8 @@ import java.lang.ref.WeakReference
  */
 
 class BubbleShowCase(builder: BubbleShowCaseBuilder){
+    private val SHARED_PREFS_NAME = "BubbleShowCasePrefs"
+
     private val FOREGROUND_LAYOUT_ID = 731
 
     private val DURATION_SHOW_CASE_ANIMATION = 200 //ms
@@ -47,6 +51,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private val mTextColor: Int? = builder.mTextColor
     private val mTitleTextSize: Int? = builder.mTitleTextSize
     private val mSubtitleTextSize: Int? = builder.mSubtitleTextSize
+    private val mShowOnce: String? = builder.mShowOnce
     private val mDisableTargetClick: Boolean = builder.mDisableTargetClick
     private val mArrowPositionList: MutableList<ArrowPosition> = builder.mArrowPositionList
     private val mTargetView: WeakReference<View>? = builder.mTargetView
@@ -62,6 +67,15 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private var bubbleMessageViewBuilder: BubbleMessageView.Builder? = null
 
     fun show(){
+        if(mShowOnce != null){
+            if(isBubbleShowCaseHasBeenShowedPreviously(mShowOnce)){
+                notifyDismissToSequenceListener()
+                return
+            } else{
+                registerBubbleShowCaseInPreferences(mShowOnce)
+            }
+        }
+
         val rootView = getViewRoot(mActivity.get()!!)
         foregroundLayoutWithBlur = getForegroundLayoutWithBlur()
         bubbleMessageViewBuilder = getBubbleMessageViewBuilder()
@@ -95,7 +109,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     }
 
     fun dismiss() {
-        mSequenceListener?.let { mSequenceListener.onDismiss() }
+        notifyDismissToSequenceListener()
         if (foregroundLayoutWithBlur != null && isLastOfSequence) {
             //Remove foreground layout if the BubbleShowCase is the last of the sequence
             val rootView = getViewRoot(mActivity.get()!!)
@@ -105,6 +119,10 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
             //Remove all the views created over the foreground layout waiting for the next BubbleShowCsse in the sequence
             foregroundLayoutWithBlur?.removeAllViews()
         }
+    }
+
+    private fun notifyDismissToSequenceListener(){
+        mSequenceListener?.let { mSequenceListener.onDismiss() }
     }
 
     private fun getViewRoot(activity: Activity): ViewGroup {
@@ -142,6 +160,27 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                     }
                 })
     }
+
+    private fun isBubbleShowCaseHasBeenShowedPreviously(id: String): Boolean{
+        val mPrefs = mActivity.get()!!.getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
+        return getString(mPrefs, id)!=null
+    }
+
+    private fun registerBubbleShowCaseInPreferences(id: String){
+        val mPrefs = mActivity.get()!!.getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
+        setString(mPrefs, id, id)
+    }
+
+    fun getString(mPrefs: SharedPreferences, key: String): String? {
+        return mPrefs.getString(key, null)
+    }
+
+    fun setString(mPrefs: SharedPreferences, key: String, value: String) {
+        val editor = mPrefs.edit()
+        editor.putString(key, value)
+        editor.apply()
+    }
+
 
     /**
      * This function takes a screenshot of the targetView, creating an ImageView from it. This new ImageView is also set on the layout passed by param
