@@ -79,6 +79,11 @@ class BubbleMessageView : ConstraintLayout {
             imageViewClose?.visibility = View.VISIBLE
             imageViewClose?.setImageDrawable(builder.mCloseAction!!)
         }
+
+        if(builder.mDisableCloseAction!=null && builder.mDisableCloseAction!!){
+            imageViewClose?.visibility = View.INVISIBLE
+        }
+
         builder.mTitle?.let {
             textViewTitle?.visibility = View.VISIBLE
             textViewTitle?.text = builder.mTitle
@@ -235,6 +240,7 @@ class BubbleMessageView : ConstraintLayout {
         lateinit var mContext: WeakReference<Context>
         var mTargetViewScreenLocation: RectF? = null
         var mImage: Drawable? = null
+        var mDisableCloseAction: Boolean? = null
         var mTitle: String? = null
         var mSubtitle: String? = null
         var mCloseAction: Drawable? = null
@@ -267,6 +273,11 @@ class BubbleMessageView : ConstraintLayout {
 
         fun closeActionImage(image: Drawable?): Builder {
             mCloseAction = image
+            return this
+        }
+
+        fun disableCloseAction(isDisabled: Boolean): Builder {
+            mDisableCloseAction = isDisabled
             return this
         }
 

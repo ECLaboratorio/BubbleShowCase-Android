@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_format_size)!!)
                 .titleTextSize(18)
                 .descriptionTextSize(16)
+                .closeActionImage(null)
                 .targetView(buttonTextSizeShowCase)
     }
 

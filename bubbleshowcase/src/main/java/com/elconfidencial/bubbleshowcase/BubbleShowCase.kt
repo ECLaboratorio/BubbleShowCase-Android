@@ -40,6 +40,16 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         TOP, BOTTOM, LEFT, RIGHT
     }
 
+    /**
+     * Highlight mode. It represents the way that the target view will be highlighted
+     * - VIEW_LAYOUT: Default value. All the view box is highlighted (the rectangle where the view is contained). Example: For a TextView, all the element is highlighted (characters and background)
+     * - VIEW_SURFACE: Only the view surface is highlighted, but not the background. Example: For a TextView, only the characters will be highlighted
+     */
+    enum class HighlightMode {
+        VIEW_LAYOUT, VIEW_SURFACE
+    }
+
+
     private val mActivity: WeakReference<Activity> = builder.mActivity!!
 
     //BubbleMessageView params
@@ -53,6 +63,8 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private val mSubtitleTextSize: Int? = builder.mSubtitleTextSize
     private val mShowOnce: String? = builder.mShowOnce
     private val mDisableTargetClick: Boolean = builder.mDisableTargetClick
+    private val mDisableCloseAction: Boolean = builder.mDisableCloseAction
+    private val mHighlightMode: BubbleShowCase.HighlightMode? = builder.mHighlightMode
     private val mArrowPositionList: MutableList<ArrowPosition> = builder.mArrowPositionList
     private val mTargetView: WeakReference<View>? = builder.mTargetView
     private val mBubbleShowCaseListener: BubbleShowCaseListener?  = builder.mBubbleShowCaseListener
@@ -153,6 +165,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                 .subtitle(mSubtitle)
                 .image(mImage)
                 .closeActionImage(mCloseAction)
+                .disableCloseAction(mDisableCloseAction)
                 .listener(object : OnDismissBubbleMessageViewListener{
                     override fun onDismiss() {
                         dismiss()
@@ -188,7 +201,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private fun addTargetViewAtForegroundLayout(targetView: View?, foregroundLayout: RelativeLayout?) {
         if(targetView==null) return
 
-        val targetScreenshot = takeScreenshot(targetView)
+        val targetScreenshot = takeScreenshot(targetView, mHighlightMode)
         val targetScreenshotView = ImageView(mActivity.get()!!)
         targetScreenshotView.setImageBitmap(targetScreenshot)
         targetScreenshotView.setOnClickListener {
@@ -198,7 +211,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         }
 
         val targetViewParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        targetViewParams.setMargins(getXposition(targetView), getYposition(targetView), 0, 0)
+        targetViewParams.setMargins(getXposition(targetView), getYposition(targetView), getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width), 0)
         foregroundLayout?.addView(AnimationUtils.setBouncingAnimation(targetScreenshotView, 0, DURATION_BEATING_ANIMATION), targetViewParams)
     }
 
@@ -317,7 +330,13 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         }
     }
 
-    private fun takeScreenshot(targetView: View): Bitmap? {
+    private fun takeScreenshot(targetView: View, highlightMode: HighlightMode?): Bitmap? {
+        if (highlightMode==null || highlightMode == HighlightMode.VIEW_LAYOUT)
+            return takeScreenshotOfLayoutView(targetView)
+        return takeScreenshotOfSurfaceView(targetView)
+    }
+
+    private fun takeScreenshotOfLayoutView(targetView: View): Bitmap? {
         if (targetView.width == 0 || targetView.height == 0) {
             return null
         }
@@ -329,6 +348,17 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         bitmap = Bitmap.createBitmap(currentScreenView.drawingCache, getXposition(targetView), getYposition(targetView), targetView.width, targetView.height)
         currentScreenView.isDrawingCacheEnabled = false
         currentScreenView.destroyDrawingCache()
+        return bitmap
+    }
+
+    private fun takeScreenshotOfSurfaceView(targetView: View): Bitmap? {
+        if (targetView.width == 0 || targetView.height == 0) {
+            return null
+        }
+
+        targetView.isDrawingCacheEnabled = true
+        val bitmap: Bitmap = Bitmap.createBitmap(targetView.drawingCache)
+        targetView.isDrawingCacheEnabled = false
         return bitmap
     }
 

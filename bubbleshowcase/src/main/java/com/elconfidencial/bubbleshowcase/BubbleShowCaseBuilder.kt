@@ -21,7 +21,9 @@ class BubbleShowCaseBuilder{
     internal var mTextColor: Int? = null
     internal var mTitleTextSize: Int? = null
     internal var mSubtitleTextSize: Int? = null
+    internal var mHighlightMode: BubbleShowCase.HighlightMode? = null
     internal var mDisableTargetClick: Boolean = false
+    internal var mDisableCloseAction: Boolean = false
     internal var mShowOnce: String? = null
     internal var mIsFirstOfSequence: Boolean? = null
     internal var mIsLastOfSequence: Boolean? = null
@@ -137,6 +139,15 @@ class BubbleShowCaseBuilder{
     }
 
     /**
+     * If this variable is true, close action button will be gone
+     *  Default value -> false
+     */
+    fun disableCloseAction(isDisabled: Boolean): BubbleShowCaseBuilder{
+        mDisableCloseAction = isDisabled
+        return this
+    }
+
+    /**
      * Insert an arrowPosition to force the position of the BubbleShowCase.
      * - ArrowPosition enum values: LEFT, RIGHT, TOP and DOWN
      * - If an arrow position is not defined, the BubbleShowCase will be set in a default position depending on the targetView
@@ -155,6 +166,16 @@ class BubbleShowCaseBuilder{
     fun arrowPosition(arrowPosition: List<BubbleShowCase.ArrowPosition>): BubbleShowCaseBuilder {
         mArrowPositionList.clear()
         mArrowPositionList.addAll(arrowPosition)
+        return this
+    }
+
+    /**
+     * Highlight mode. It represents the way that the target view will be highlighted
+     * - VIEW_LAYOUT: Default value. All the view box is highlighted (the rectangle where the view is contained). Example: For a TextView, all the element is highlighted (characters and background)
+     * - VIEW_SURFACE: Only the view surface is highlighted, but not the background. Example: For a TextView, only the characters will be highlighted
+     */
+    fun highlightMode(highlightMode: BubbleShowCase.HighlightMode): BubbleShowCaseBuilder {
+        mHighlightMode = highlightMode
         return this
     }
 
