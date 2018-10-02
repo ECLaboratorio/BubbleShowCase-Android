@@ -210,7 +210,7 @@ class BubbleShowCaseBuilder{
     /**
      * Build the BubbleShowCase object from the builder one
      */
-    fun build(): BubbleShowCase {
+    private fun build(): BubbleShowCase {
         if(mIsFirstOfSequence ==null)
             mIsFirstOfSequence = true
         if(mIsLastOfSequence ==null)
@@ -222,7 +222,7 @@ class BubbleShowCaseBuilder{
     /**
      * Show the BubbleShowCase using the params added previously
      */
-    fun show(){
+    fun show(): BubbleShowCase{
         val bubbleShowCase = build()
         if (mTargetView != null) {
             val targetView = mTargetView!!.get()
@@ -239,6 +239,7 @@ class BubbleShowCaseBuilder{
         } else {
             bubbleShowCase.show()
         }
+        return bubbleShowCase
     }
 
 }
