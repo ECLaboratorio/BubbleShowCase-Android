@@ -7,7 +7,7 @@ apply from: 'keystore.gradle'
 ext{
     groupId = 'com.elconfidencial.bubbleshowcase'
     artifactId = 'bubbleshowcase'
-    libraryVersion = '1.2.0'
+    libraryVersion = '1.2.1'
 }
 
 version = libraryVersion
