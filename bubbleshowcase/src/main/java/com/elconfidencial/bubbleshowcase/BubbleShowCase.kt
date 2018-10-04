@@ -116,7 +116,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         if(isFirstOfSequence){
             //Add the foreground layout above the root view
             val animation = AnimationUtils.getFadeInAnimation(0, DURATION_BACKGROUND_ANIMATION)
-            rootView.addView(AnimationUtils.setAnimationToView(foregroundLayoutWithBlur!!, animation))
+            foregroundLayoutWithBlur?.let { rootView.addView(AnimationUtils.setAnimationToView(foregroundLayoutWithBlur!!, animation)) }
         }
     }
 
@@ -379,11 +379,11 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     }
 
     private fun getScreenVerticalOffset(): Int{
-        return ScreenUtils.getAxisYpositionOfViewOnScreen(foregroundLayoutWithBlur!!)
+        return if(foregroundLayoutWithBlur!=null) ScreenUtils.getAxisYpositionOfViewOnScreen(foregroundLayoutWithBlur!!) else 0
     }
 
     private fun getScreenHorizontalOffset(): Int{
-        return ScreenUtils.getAxisXpositionOfViewOnScreen(foregroundLayoutWithBlur!!)
+        return if(foregroundLayoutWithBlur!=null) ScreenUtils.getAxisXpositionOfViewOnScreen(foregroundLayoutWithBlur!!) else 0
     }
 
     private fun getMessageViewWidthOnTablet(availableSpace: Int): Int{
