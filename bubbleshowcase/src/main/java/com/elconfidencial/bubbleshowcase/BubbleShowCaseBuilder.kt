@@ -2,6 +2,7 @@ package com.elconfidencial.bubbleshowcase
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewTreeObserver
 import java.lang.ref.WeakReference
@@ -59,10 +60,19 @@ class BubbleShowCaseBuilder{
 
     /**
      * Image drawable to inserted as main image in the BubbleShowCase
-     *  - If this param is not inserted, the BubbleShowCase will not have main image
+     *  - If this param is not passed, the BubbleShowCase will not have main image
      */
     fun image(image: Drawable): BubbleShowCaseBuilder {
         mImage = image
+        return this
+    }
+
+    /**
+     * Image resource id to insert the corresponding drawable as main image in the BubbleShowCase
+     *  - If this param is not passed, the BubbleShowCase will not have main image
+     */
+    fun imageResourceId(resId: Int): BubbleShowCaseBuilder {
+        mImage = ContextCompat.getDrawable(mActivity!!.get(), resId)
         return this
     }
 
@@ -76,6 +86,16 @@ class BubbleShowCaseBuilder{
     }
 
     /**
+     * Image resource id to insert the corresponding drawable as close icon in the BubbleShowCase.
+     *  - If this param is not defined, a default close icon is displayed
+     */
+    fun closeActionImageResourceId(resId: Int): BubbleShowCaseBuilder {
+        mCloseAction = ContextCompat.getDrawable(mActivity!!.get(), resId)
+        return this
+    }
+
+
+    /**
      * Background color of the BubbleShowCase.
      *  - #3F51B5 color will be set if this param is not defined
      */
@@ -85,11 +105,29 @@ class BubbleShowCaseBuilder{
     }
 
     /**
+     * Background color of the BubbleShowCase.
+     *  - #3F51B5 color will be set if this param is not defined
+     */
+    fun backgroundColorResourceId(colorResId: Int): BubbleShowCaseBuilder {
+        mBackgroundColor = ContextCompat.getColor(mActivity!!.get(), colorResId)
+        return this
+    }
+
+    /**
      * Text color of the BubbleShowCase.
      *  - White color will be set if this param is not defined
      */
     fun textColor(color: Int): BubbleShowCaseBuilder {
         mTextColor = color
+        return this
+    }
+
+    /**
+     * Text color of the BubbleShowCase.
+     *  - White color will be set if this param is not defined
+     */
+    fun textColorResourceId(colorResId: Int): BubbleShowCaseBuilder {
+        mTextColor = ContextCompat.getColor(mActivity!!.get(), colorResId)
         return this
     }
 
