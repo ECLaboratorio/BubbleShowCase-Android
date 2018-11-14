@@ -46,8 +46,15 @@ BubbleShowCaseBuilder(this) //Activity instance
                     override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
                         //Called when the user clicks the target
                     }
-                    override fun onClose(bubbleShowCase: BubbleShowCase) {
+                    override fun onCloseActionImageClick(bubbleShowCase: BubbleShowCase) {
                         //Called when the user clicks the close button
+                    }
+                    override fun onBubbleClick(bubbleShowCase: BubbleShowCase) {
+                        //Called when the user clicks on the bubble
+                    }
+
+                    override fun onBackgroundDimClick(bubbleShowCase: BubbleShowCase) {
+                        //Called when the user clicks on the background dim
                     }
                 })
                 .targetView(buttonArrowRightShowCase) //View to point out

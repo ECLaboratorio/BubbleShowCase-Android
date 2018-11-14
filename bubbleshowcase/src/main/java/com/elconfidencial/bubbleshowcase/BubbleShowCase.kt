@@ -75,7 +75,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private val isLastOfSequence: Boolean  = builder.mIsLastOfSequence!!
 
     //References
-    private var foregroundLayoutWithBlur: RelativeLayout? = null
+    private var backgroundDimLayout: RelativeLayout? = null
     private var bubbleMessageViewBuilder: BubbleMessageView.Builder? = null
 
     fun show(){
@@ -89,7 +89,8 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         }
 
         val rootView = getViewRoot(mActivity.get()!!)
-        foregroundLayoutWithBlur = getForegroundLayoutWithBlur()
+        backgroundDimLayout = getBackgroundDimLayout()
+        setBackgroundDimListener(backgroundDimLayout)
         bubbleMessageViewBuilder = getBubbleMessageViewBuilder()
 
         if (mTargetView != null && mArrowPositionList.size <= 1) {
@@ -104,33 +105,37 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                 }
 
                 if (ScreenUtils.isVisibleOnScreen(target)) {
-                    addTargetViewAtForegroundLayout(target, foregroundLayoutWithBlur)
-                    addBubbleMessageViewDependingOnTargetView(target, bubbleMessageViewBuilder!!, foregroundLayoutWithBlur)
+                    addTargetViewAtBackgroundDimLayout(target, backgroundDimLayout)
+                    addBubbleMessageViewDependingOnTargetView(target, bubbleMessageViewBuilder!!, backgroundDimLayout)
                 } else {
                     dismiss()
                 }
             }, DURATION_BACKGROUND_ANIMATION.toLong())
         } else {
-            addBubbleMessageViewOnScreenCenter(bubbleMessageViewBuilder!!, foregroundLayoutWithBlur)
+            addBubbleMessageViewOnScreenCenter(bubbleMessageViewBuilder!!, backgroundDimLayout)
         }
         if(isFirstOfSequence){
-            //Add the foreground layout above the root view
+            //Add the background dim layout above the root view
             val animation = AnimationUtils.getFadeInAnimation(0, DURATION_BACKGROUND_ANIMATION)
-            foregroundLayoutWithBlur?.let { rootView.addView(AnimationUtils.setAnimationToView(foregroundLayoutWithBlur!!, animation)) }
+            backgroundDimLayout?.let { rootView.addView(AnimationUtils.setAnimationToView(backgroundDimLayout!!, animation)) }
         }
     }
 
     fun dismiss() {
-        notifyDismissToSequenceListener()
-        if (foregroundLayoutWithBlur != null && isLastOfSequence) {
-            //Remove foreground layout if the BubbleShowCase is the last of the sequence
-            val rootView = getViewRoot(mActivity.get()!!)
-            rootView.removeView(foregroundLayoutWithBlur)
-            foregroundLayoutWithBlur = null
+        if (backgroundDimLayout != null && isLastOfSequence) {
+            //Remove background dim layout if the BubbleShowCase is the last of the sequence
+            finishSequence()
         } else {
-            //Remove all the views created over the foreground layout waiting for the next BubbleShowCsse in the sequence
-            foregroundLayoutWithBlur?.removeAllViews()
+            //Remove all the views created over the background dim layout waiting for the next BubbleShowCsse in the sequence
+            backgroundDimLayout?.removeAllViews()
         }
+        notifyDismissToSequenceListener()
+    }
+
+    fun finishSequence() {
+        val rootView = getViewRoot(mActivity.get()!!)
+        rootView.removeView(backgroundDimLayout)
+        backgroundDimLayout = null
     }
 
     private fun notifyDismissToSequenceListener(){
@@ -142,7 +147,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         return androidContent.parent.parent as ViewGroup
     }
 
-    private fun getForegroundLayoutWithBlur(): RelativeLayout {
+    private fun getBackgroundDimLayout(): RelativeLayout {
         if(mActivity.get()!!.findViewById<RelativeLayout>(FOREGROUND_LAYOUT_ID) != null)
             return mActivity.get()!!.findViewById(FOREGROUND_LAYOUT_ID)
         val backgroundLayout = RelativeLayout(mActivity.get()!!)
@@ -151,6 +156,10 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         backgroundLayout.setBackgroundColor(ContextCompat.getColor(mActivity.get()!!, R.color.transparent_grey))
         backgroundLayout.isClickable = true
         return backgroundLayout
+    }
+
+    private fun setBackgroundDimListener(backgroundDimLayout: RelativeLayout?){
+        backgroundDimLayout?.setOnClickListener { mBubbleShowCaseListener?.onBackgroundDimClick(this) }
     }
 
     private fun getBubbleMessageViewBuilder(): BubbleMessageView.Builder{
@@ -166,10 +175,14 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                 .image(mImage)
                 .closeActionImage(mCloseAction)
                 .disableCloseAction(mDisableCloseAction)
-                .listener(object : OnDismissBubbleMessageViewListener{
-                    override fun onDismiss() {
+                .listener(object : OnBubbleMessageViewListener {
+                    override fun onBubbleClick() {
+                        mBubbleShowCaseListener?.onBubbleClick(this@BubbleShowCase)
+                    }
+
+                    override fun onCloseActionImageClick() {
                         dismiss()
-                        mBubbleShowCaseListener?.onClose(this@BubbleShowCase)
+                        mBubbleShowCaseListener?.onCloseActionImageClick(this@BubbleShowCase)
                     }
                 })
     }
@@ -184,11 +197,11 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         setString(mPrefs, id, id)
     }
 
-    fun getString(mPrefs: SharedPreferences, key: String): String? {
+    private fun getString(mPrefs: SharedPreferences, key: String): String? {
         return mPrefs.getString(key, null)
     }
 
-    fun setString(mPrefs: SharedPreferences, key: String, value: String) {
+    private fun setString(mPrefs: SharedPreferences, key: String, value: String) {
         val editor = mPrefs.edit()
         editor.putString(key, value)
         editor.apply()
@@ -198,7 +211,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     /**
      * This function takes a screenshot of the targetView, creating an ImageView from it. This new ImageView is also set on the layout passed by param
      */
-    private fun addTargetViewAtForegroundLayout(targetView: View?, foregroundLayout: RelativeLayout?) {
+    private fun addTargetViewAtBackgroundDimLayout(targetView: View?, backgroundDimLayout: RelativeLayout?) {
         if(targetView==null) return
 
         val targetScreenshot = takeScreenshot(targetView, mHighlightMode)
@@ -212,13 +225,13 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
 
         val targetViewParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
         targetViewParams.setMargins(getXposition(targetView), getYposition(targetView), getScreenWidth(mActivity.get()!!) - (getXposition(targetView) + targetView.width), 0)
-        foregroundLayout?.addView(AnimationUtils.setBouncingAnimation(targetScreenshotView, 0, DURATION_BEATING_ANIMATION), targetViewParams)
+        backgroundDimLayout?.addView(AnimationUtils.setBouncingAnimation(targetScreenshotView, 0, DURATION_BEATING_ANIMATION), targetViewParams)
     }
 
     /**
      * This function creates the BubbleMessageView depending the position of the target and the desired arrow position. This new view is also set on the layout passed by param
      */
-    private fun addBubbleMessageViewDependingOnTargetView(targetView: View?, bubbleMessageViewBuilder: BubbleMessageView.Builder, foregroundLayout: RelativeLayout?) {
+    private fun addBubbleMessageViewDependingOnTargetView(targetView: View?, bubbleMessageViewBuilder: BubbleMessageView.Builder, backgroundDimLayout: RelativeLayout?) {
         if(targetView==null) return
         val showCaseParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
 
@@ -302,13 +315,13 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
 
         bubbleMessageView.id = createViewId()
         val animation = AnimationUtils.getScaleAnimation(0, DURATION_SHOW_CASE_ANIMATION)
-        foregroundLayout?.addView(AnimationUtils.setAnimationToView(bubbleMessageView, animation), showCaseParams)
+        backgroundDimLayout?.addView(AnimationUtils.setAnimationToView(bubbleMessageView, animation), showCaseParams)
     }
 
     /**
      * This function creates a BubbleMessageView and it is set on the center of the layout passed by param
      */
-    private fun addBubbleMessageViewOnScreenCenter(bubbleMessageViewBuilder: BubbleMessageView.Builder, foregroundLayout: RelativeLayout?) {
+    private fun addBubbleMessageViewOnScreenCenter(bubbleMessageViewBuilder: BubbleMessageView.Builder, backgroundDimLayout: RelativeLayout?) {
         val showCaseParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
         showCaseParams.addRule(RelativeLayout. CENTER_VERTICAL)
         val bubbleMessageView: BubbleMessageView = bubbleMessageViewBuilder.build()
@@ -319,7 +332,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                 if (isTablet()) getScreenWidth(mActivity.get()!!)/2 - ScreenUtils.dpToPx(MAX_WIDTH_MESSAGE_VIEW_TABLET)/2 else 0,
                 0)
         val animation = AnimationUtils.getScaleAnimation(0, DURATION_SHOW_CASE_ANIMATION)
-        foregroundLayout?.addView(AnimationUtils.setAnimationToView(bubbleMessageView, animation), showCaseParams)
+        backgroundDimLayout?.addView(AnimationUtils.setAnimationToView(bubbleMessageView, animation), showCaseParams)
     }
 
     private fun createViewId(): Int {
@@ -379,11 +392,11 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     }
 
     private fun getScreenVerticalOffset(): Int{
-        return if(foregroundLayoutWithBlur!=null) ScreenUtils.getAxisYpositionOfViewOnScreen(foregroundLayoutWithBlur!!) else 0
+        return if(backgroundDimLayout !=null) ScreenUtils.getAxisYpositionOfViewOnScreen(backgroundDimLayout!!) else 0
     }
 
     private fun getScreenHorizontalOffset(): Int{
-        return if(foregroundLayoutWithBlur!=null) ScreenUtils.getAxisXpositionOfViewOnScreen(foregroundLayoutWithBlur!!) else 0
+        return if(backgroundDimLayout !=null) ScreenUtils.getAxisXpositionOfViewOnScreen(backgroundDimLayout!!) else 0
     }
 
     private fun getMessageViewWidthOnTablet(availableSpace: Int): Int{

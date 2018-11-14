@@ -3,6 +3,9 @@ package com.elconfidencial.bubbleshowcase
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.view.menu.ActionMenuItemView
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -12,6 +15,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUpListeners()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_test, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        return if(id == R.id.action_test) true else super.onOptionsItemSelected(item)
     }
 
     private fun setUpListeners(){
@@ -73,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 .targetView(buttonArrowRightShowCase)
     }
 
+
     private fun getListenerShowCaseBuilder(): BubbleShowCaseBuilder{
         return BubbleShowCaseBuilder(this)
                 .title("Listen user actions!")
@@ -80,11 +94,19 @@ class MainActivity : AppCompatActivity() {
                 .backgroundColor(ContextCompat.getColor(this, R.color.colorOrange))
                 .image(ContextCompat.getDrawable(this, R.drawable.ic_sentiment_satisfied)!!)
                 .listener(object : BubbleShowCaseListener{
+                    override fun onBubbleClick(bubbleShowCase: BubbleShowCase) {
+                        Toast.makeText(this@MainActivity, "OnBubbleClick", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onBackgroundDimClick(bubbleShowCase: BubbleShowCase) {
+                        Toast.makeText(this@MainActivity, "OnBackgroundDimClick", Toast.LENGTH_SHORT).show()
+                    }
+
                     override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
                         Toast.makeText(this@MainActivity, "OnTargetClick", Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onClose(bubbleShowCase: BubbleShowCase) {
+                    override fun onCloseActionImageClick(bubbleShowCase: BubbleShowCase) {
                         Toast.makeText(this@MainActivity, "OnClose", Toast.LENGTH_SHORT).show()
                     }
                 })

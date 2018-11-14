@@ -1,7 +1,6 @@
 package com.elconfidencial.bubbleshowcase
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
@@ -26,6 +25,8 @@ class BubbleMessageView : ConstraintLayout {
 
     private val WIDTH_ARROW = 20
 
+    private var itemView: View? = null
+
     private var imageViewIcon: ImageView? = null
     private var textViewTitle: TextView? = null
     private var textViewSubtitle: TextView? = null
@@ -45,6 +46,7 @@ class BubbleMessageView : ConstraintLayout {
     constructor(context: Context, builder: Builder) : super(context) {
         initView()
         setAttributes(builder)
+        setBubbleListener(builder)
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -59,7 +61,7 @@ class BubbleMessageView : ConstraintLayout {
     }
 
     private fun inflateXML() {
-        inflate(context, R.layout.view_bubble_message, this)
+        itemView = inflate(context, R.layout.view_bubble_message, this)
     }
 
     private fun bindViews() {
@@ -105,13 +107,13 @@ class BubbleMessageView : ConstraintLayout {
         builder.mBackgroundColor?.let { mBackgroundColor = builder.mBackgroundColor!! }
         arrowPositionList = builder.mArrowPosition
         targetViewScreenLocation = builder.mTargetViewScreenLocation
-
-        setOnDismissListener(builder)
     }
 
-    private fun setOnDismissListener(builder: Builder){
-        imageViewClose?.setOnClickListener {builder.mListener?.onDismiss()}
+    private fun setBubbleListener(builder: Builder){
+        imageViewClose?.setOnClickListener {builder.mListener?.onCloseActionImageClick()}
+        itemView?.setOnClickListener {builder.mListener?.onBubbleClick()}
     }
+
 
     //END REGION
 
@@ -249,7 +251,7 @@ class BubbleMessageView : ConstraintLayout {
         var mTitleTextSize: Int? = null
         var mSubtitleTextSize: Int? = null
         var mArrowPosition  = ArrayList<BubbleShowCase.ArrowPosition>()
-        var mListener: OnDismissBubbleMessageViewListener? = null
+        var mListener: OnBubbleMessageViewListener? = null
 
         fun from(context: Context): Builder{
             mContext = WeakReference(context)
@@ -312,7 +314,7 @@ class BubbleMessageView : ConstraintLayout {
             return this
         }
 
-        fun listener(listener: OnDismissBubbleMessageViewListener?): Builder {
+        fun listener(listener: OnBubbleMessageViewListener?): Builder {
             mListener = listener
             return this
         }
