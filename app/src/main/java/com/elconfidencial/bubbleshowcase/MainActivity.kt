@@ -17,16 +17,6 @@ class MainActivity : AppCompatActivity() {
         setUpListeners()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_test, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        return if(id == R.id.action_test) true else super.onOptionsItemSelected(item)
-    }
-
     private fun setUpListeners(){
         buttonSimpleShowCase.setOnClickListener { getSimpleShowCaseBuilder().show() }
         buttonColorShowCase.setOnClickListener { getCustomColorShowCaseBuilder().show() }

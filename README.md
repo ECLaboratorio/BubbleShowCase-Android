@@ -57,7 +57,7 @@ BubbleShowCaseBuilder(this) //Activity instance
                         //Called when the user clicks on the background dim
                     }
                 })
-                .targetView(buttonArrowRightShowCase) //View to point out
+                .targetView(view) //View to point out
                 .show() //Display the ShowCase
 ```
 

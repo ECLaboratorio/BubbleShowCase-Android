@@ -61,15 +61,6 @@ object ScreenUtils {
         return androidContent.parent.parent as ViewGroup
     }
 
-    fun isVisibleOnScreen(targetView: View?): Boolean {
-        if(targetView!=null){
-            if(getAxisXpositionOfViewOnScreen(targetView) >= 0 && getAxisYpositionOfViewOnScreen(targetView) >= 0){
-                return getAxisXpositionOfViewOnScreen(targetView) != 0 || getAxisYpositionOfViewOnScreen(targetView) != 0
-            }
-        }
-        return false
-    }
-
     fun getStatusBarHeight(context: Context): Int {
         var result = 0
         val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")

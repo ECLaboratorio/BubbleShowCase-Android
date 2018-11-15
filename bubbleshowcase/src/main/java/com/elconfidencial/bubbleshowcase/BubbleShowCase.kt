@@ -104,7 +104,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                     bubbleMessageViewBuilder = getBubbleMessageViewBuilder()
                 }
 
-                if (ScreenUtils.isVisibleOnScreen(target)) {
+                if (isVisibleOnScreen(target)) {
                     addTargetViewAtBackgroundDimLayout(target, backgroundDimLayout)
                     addBubbleMessageViewDependingOnTargetView(target, bubbleMessageViewBuilder!!, backgroundDimLayout)
                 } else {
@@ -373,6 +373,15 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         val bitmap: Bitmap = Bitmap.createBitmap(targetView.drawingCache)
         targetView.isDrawingCacheEnabled = false
         return bitmap
+    }
+
+    private fun isVisibleOnScreen(targetView: View?): Boolean {
+        if(targetView!=null){
+            if(getXposition(targetView) >= 0 && getYposition(targetView) >= 0){
+                return getXposition(targetView) != 0 || getYposition(targetView) != 0
+            }
+        }
+        return false
     }
 
     private fun getXposition(targetView: View): Int{
