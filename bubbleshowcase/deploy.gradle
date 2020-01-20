@@ -4,10 +4,10 @@ apply from: 'keystore.gradle'
 
 //This file was created following instructions from: https://notes.devlabs.bg/beginners-guide-for-publishing-a-kotlin-library-to-jcenter-41272bfc214
 
-ext{
+ext {
     groupId = 'com.elconfidencial.bubbleshowcase'
     artifactId = 'bubbleshowcase'
-    libraryVersion = '1.3.1'
+    libraryVersion = '1.3.2-oab-snapshot'
 }
 
 version = libraryVersion
