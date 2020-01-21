@@ -8,3 +8,5 @@
 /build
 /captures
 .externalNativeBuild
+.idea
+bubbleshowcase/deploy-custom-repository.gradle

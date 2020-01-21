@@ -34,6 +34,7 @@ Below it is showed an example of a BubbleShowCase will all possible input params
 BubbleShowCaseBuilder(this) //Activity instance
                 .title("foo") //Any title for the bubble view
                 .description("bar") //More detailed description
+                .ignoreSequenceTitle("Skip") // To add button with label 'skip' to skip sequence
                 .arrowPosition(BubbleShowCase.ArrowPosition.RIGHT) //You can force the position of the arrow to change the location of the bubble.
                 .backgroundColor(Color.GREEN) //Bubble background color
                 .textColor(Color.BLACK) //Bubble Text color

@@ -17,6 +17,7 @@ class BubbleShowCaseBuilder{
     internal var mImage: Drawable? = null
     internal var mTitle: String? = null
     internal var mSubtitle: String? = null
+    internal var mIgnoreTitle: String? = null
     internal var mCloseAction: Drawable? = null
     internal var mBackgroundColor: Int? = null
     internal var mTextColor: Int? = null
@@ -217,6 +218,10 @@ class BubbleShowCaseBuilder{
         return this
     }
 
+    fun ignoreSequenceTitle(ignoreTitle : String): BubbleShowCaseBuilder {
+        mIgnoreTitle =  ignoreTitle
+        return this
+    }
     /**
      * Add a BubbleShowCaseListener in order to listen the user actions:
      * - onTargetClick -> It is triggered when the user clicks on the target view

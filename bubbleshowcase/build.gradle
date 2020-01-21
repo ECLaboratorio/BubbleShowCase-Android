@@ -7,10 +7,8 @@ apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'maven-publish'
 
 
-
 android {
     compileSdkVersion 26
-
 
 
     defaultConfig {
@@ -39,7 +37,7 @@ dokka {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
@@ -50,5 +48,10 @@ repositories {
     mavenCentral()
 }
 
-
 apply from: 'deploy.gradle'
+
+def file = new File("$projectDir/deploy-custom-repository.gradle")
+
+if(file.exists()) {
+    apply from: 'deploy-custom-repository.gradle'
+}
