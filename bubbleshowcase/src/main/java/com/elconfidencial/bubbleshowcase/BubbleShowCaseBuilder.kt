@@ -19,6 +19,7 @@ class BubbleShowCaseBuilder{
     internal var mSubtitle: String? = null
     internal var mCloseAction: Drawable? = null
     internal var mBackgroundColor: Int? = null
+    internal var mBorderColor: Int? = null
     internal var mTextColor: Int? = null
     internal var mTitleTextSize: Int? = null
     internal var mSubtitleTextSize: Int? = null
@@ -94,7 +95,6 @@ class BubbleShowCaseBuilder{
         return this
     }
 
-
     /**
      * Background color of the BubbleShowCase.
      *  - #3F51B5 color will be set if this param is not defined
@@ -105,11 +105,29 @@ class BubbleShowCaseBuilder{
     }
 
     /**
+     * Border color of the BubbleShowCase.
+     *  - #FFF color will be set if this param is not defined
+     */
+    fun borderColor(color: Int): BubbleShowCaseBuilder {
+        mBorderColor = color
+        return this
+    }
+
+    /**
      * Background color of the BubbleShowCase.
      *  - #3F51B5 color will be set if this param is not defined
      */
     fun backgroundColorResourceId(colorResId: Int): BubbleShowCaseBuilder {
         mBackgroundColor = ContextCompat.getColor(mActivity!!.get(), colorResId)
+        return this
+    }
+
+    /**
+     * Border color of the BubbleShowCase.
+     *  - #FFF color will be set if this param is not defined
+     */
+    fun borderColorResourceId(colorResId: Int): BubbleShowCaseBuilder {
+        mBorderColor = ContextCompat.getColor(mActivity!!.get(), colorResId)
         return this
     }
 

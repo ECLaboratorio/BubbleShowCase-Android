@@ -58,6 +58,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
     private val mSubtitle: String? = builder.mSubtitle
     private val mCloseAction: Drawable? = builder.mCloseAction
     private val mBackgroundColor: Int? = builder.mBackgroundColor
+    private val mBorderColor: Int? = builder.mBorderColor
     private val mTextColor: Int? = builder.mTextColor
     private val mTitleTextSize: Int? = builder.mTitleTextSize
     private val mSubtitleTextSize: Int? = builder.mSubtitleTextSize
@@ -167,6 +168,7 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
                 .from(mActivity.get()!!)
                 .arrowPosition(mArrowPositionList)
                 .backgroundColor(mBackgroundColor)
+                .borderColor(mBorderColor)
                 .textColor(mTextColor)
                 .titleTextSize(mTitleTextSize)
                 .subtitleTextSize(mSubtitleTextSize)

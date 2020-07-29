@@ -11,17 +11,14 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import java.lang.ref.WeakReference
+import java.util.*
+import kotlin.math.roundToInt
 
-import java.util.ArrayList
-
-/**
- * Created by jcampos on 05/09/2018.
- */
-
-class BubbleMessageView : ConstraintLayout {
+class BubbleMessageView : FrameLayout {
 
     private val WIDTH_ARROW = 20
 
@@ -34,7 +31,7 @@ class BubbleMessageView : ConstraintLayout {
     private var showCaseMessageViewLayout: ConstraintLayout? = null
 
     private var targetViewScreenLocation: RectF? = null
-    private var mBackgroundColor: Int = ContextCompat.getColor(context, R.color.blue_default)
+    private var mBorderColor: Int = ContextCompat.getColor(context, R.color.white)
     private var arrowPositionList = ArrayList<BubbleShowCase.ArrowPosition>()
 
     private var paint: Paint? = null
@@ -55,7 +52,6 @@ class BubbleMessageView : ConstraintLayout {
 
     private fun initView() {
         setWillNotDraw(false)
-
         inflateXML()
         bindViews()
     }
@@ -104,7 +100,10 @@ class BubbleMessageView : ConstraintLayout {
         builder.mSubtitleTextSize?.let {
             textViewSubtitle?.setTextSize(TypedValue.COMPLEX_UNIT_SP, builder.mSubtitleTextSize!!.toFloat())
         }
-        builder.mBackgroundColor?.let { mBackgroundColor = builder.mBackgroundColor!! }
+        builder.mBackgroundColor?.let {
+            showCaseMessageViewLayout!!.setBackgroundColor(builder.mBackgroundColor!!)
+        }
+        builder.mBorderColor?.let { mBorderColor = builder.mBorderColor!! }
         arrowPositionList = builder.mArrowPosition
         targetViewScreenLocation = builder.mTargetViewScreenLocation
     }
@@ -142,7 +141,7 @@ class BubbleMessageView : ConstraintLayout {
 
     private fun prepareToDraw() {
         paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint!!.color = mBackgroundColor
+        paint!!.color = mBorderColor
         paint!!.style = Paint.Style.FILL
         paint!!.strokeWidth = 4.0f
     }
@@ -182,23 +181,19 @@ class BubbleMessageView : ConstraintLayout {
     }
 
     private fun getArrowHorizontalPositionDependingOnTarget(targetViewLocationOnScreen: RectF?): Int {
-        val xPosition: Int
-        when {
-            isOutOfRightBound(targetViewLocationOnScreen) -> xPosition = width - getSecurityArrowMargin()
-            isOutOfLeftBound(targetViewLocationOnScreen) -> xPosition = getSecurityArrowMargin()
-            else -> xPosition = Math.round(targetViewLocationOnScreen!!.centerX() - ScreenUtils.getAxisXpositionOfViewOnScreen(this))
+        return when {
+            isOutOfRightBound(targetViewLocationOnScreen) -> width - getSecurityArrowMargin()
+            isOutOfLeftBound(targetViewLocationOnScreen) -> getSecurityArrowMargin()
+            else -> (targetViewLocationOnScreen!!.centerX() - ScreenUtils.getAxisXpositionOfViewOnScreen(this)).roundToInt()
         }
-        return xPosition
     }
 
     private fun getArrowVerticalPositionDependingOnTarget(targetViewLocationOnScreen: RectF?): Int {
-        val yPosition: Int
-        when {
-            isOutOfBottomBound(targetViewLocationOnScreen) -> yPosition = height - getSecurityArrowMargin()
-            isOutOfTopBound(targetViewLocationOnScreen) -> yPosition = getSecurityArrowMargin()
-            else -> yPosition = Math.round(targetViewLocationOnScreen!!.centerY() + ScreenUtils.getStatusBarHeight(context) - ScreenUtils.getAxisYpositionOfViewOnScreen(this))
+        return when {
+            isOutOfBottomBound(targetViewLocationOnScreen) -> height - getSecurityArrowMargin()
+            isOutOfTopBound(targetViewLocationOnScreen) -> getSecurityArrowMargin()
+            else -> (targetViewLocationOnScreen!!.centerY() + ScreenUtils.getStatusBarHeight(context) - ScreenUtils.getAxisYpositionOfViewOnScreen(this)).roundToInt()
         }
-        return yPosition
     }
 
     private fun isOutOfRightBound(targetViewLocationOnScreen: RectF?): Boolean {
@@ -247,6 +242,7 @@ class BubbleMessageView : ConstraintLayout {
         var mSubtitle: String? = null
         var mCloseAction: Drawable? = null
         var mBackgroundColor: Int? = null
+        var mBorderColor: Int? = null
         var mTextColor: Int? = null
         var mTitleTextSize: Int? = null
         var mSubtitleTextSize: Int? = null
@@ -290,6 +286,11 @@ class BubbleMessageView : ConstraintLayout {
 
         fun backgroundColor(backgroundColor: Int?): Builder {
             mBackgroundColor = backgroundColor
+            return this
+        }
+
+        fun borderColor(borderColor: Int?): Builder {
+            mBorderColor = borderColor
             return this
         }
 
