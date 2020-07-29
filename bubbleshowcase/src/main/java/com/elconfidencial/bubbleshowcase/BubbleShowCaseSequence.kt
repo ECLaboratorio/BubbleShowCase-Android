@@ -47,4 +47,24 @@ class BubbleShowCaseSequence{
         }).show()
     }
 
+    fun showStartingAtPosition(position: Int) {
+        if(position >= mBubbleShowCaseBuilderList.size)
+            return
+
+        mBubbleShowCaseBuilderList[position].isFirstOfSequence(true)
+        when(position){
+            mBubbleShowCaseBuilderList.size-1 -> {
+                mBubbleShowCaseBuilderList[position].isLastOfSequence(true)
+            }
+            else -> {
+                mBubbleShowCaseBuilderList[position].isLastOfSequence(false)
+            }
+        }
+        mBubbleShowCaseBuilderList[position].sequenceListener(object : SequenceShowCaseListener{
+            override fun onDismiss() {
+                show(position + 1)
+            }
+        }).show()
+    }
+
 }

@@ -14,8 +14,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import java.lang.ref.WeakReference
-
-import java.util.ArrayList
+import java.util.*
+import kotlin.math.roundToInt
 
 /**
  * Created by jcampos on 05/09/2018.
@@ -55,7 +55,6 @@ class BubbleMessageView : ConstraintLayout {
 
     private fun initView() {
         setWillNotDraw(false)
-
         inflateXML()
         bindViews()
     }
@@ -182,23 +181,19 @@ class BubbleMessageView : ConstraintLayout {
     }
 
     private fun getArrowHorizontalPositionDependingOnTarget(targetViewLocationOnScreen: RectF?): Int {
-        val xPosition: Int
-        when {
-            isOutOfRightBound(targetViewLocationOnScreen) -> xPosition = width - getSecurityArrowMargin()
-            isOutOfLeftBound(targetViewLocationOnScreen) -> xPosition = getSecurityArrowMargin()
-            else -> xPosition = Math.round(targetViewLocationOnScreen!!.centerX() - ScreenUtils.getAxisXpositionOfViewOnScreen(this))
+        return when {
+            isOutOfRightBound(targetViewLocationOnScreen) -> width - getSecurityArrowMargin()
+            isOutOfLeftBound(targetViewLocationOnScreen) -> getSecurityArrowMargin()
+            else -> (targetViewLocationOnScreen!!.centerX() - ScreenUtils.getAxisXpositionOfViewOnScreen(this)).roundToInt()
         }
-        return xPosition
     }
 
     private fun getArrowVerticalPositionDependingOnTarget(targetViewLocationOnScreen: RectF?): Int {
-        val yPosition: Int
-        when {
-            isOutOfBottomBound(targetViewLocationOnScreen) -> yPosition = height - getSecurityArrowMargin()
-            isOutOfTopBound(targetViewLocationOnScreen) -> yPosition = getSecurityArrowMargin()
-            else -> yPosition = Math.round(targetViewLocationOnScreen!!.centerY() + ScreenUtils.getStatusBarHeight(context) - ScreenUtils.getAxisYpositionOfViewOnScreen(this))
+        return when {
+            isOutOfBottomBound(targetViewLocationOnScreen) -> height - getSecurityArrowMargin()
+            isOutOfTopBound(targetViewLocationOnScreen) -> getSecurityArrowMargin()
+            else -> (targetViewLocationOnScreen!!.centerY() + ScreenUtils.getStatusBarHeight(context) - ScreenUtils.getAxisYpositionOfViewOnScreen(this)).roundToInt()
         }
-        return yPosition
     }
 
     private fun isOutOfRightBound(targetViewLocationOnScreen: RectF?): Boolean {
