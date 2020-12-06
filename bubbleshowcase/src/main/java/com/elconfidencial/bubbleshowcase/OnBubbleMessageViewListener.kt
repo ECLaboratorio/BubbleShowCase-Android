@@ -9,7 +9,6 @@ interface OnBubbleMessageViewListener {
      */
     fun onCloseActionImageClick()
 
-
     /**
      * It is called when a user clicks the BubbleMessageView
      */

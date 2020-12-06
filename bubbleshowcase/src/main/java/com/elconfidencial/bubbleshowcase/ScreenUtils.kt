@@ -4,14 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Point
-import android.graphics.Rect
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.Window.ID_ANDROID_CONTENT
-
-
+import kotlin.math.roundToInt
 
 /**
  * Created by jcampos on 05/09/2018.
@@ -72,12 +69,12 @@ object ScreenUtils {
 
     fun pxToDp(px: Int): Int {
         val metrics = Resources.getSystem().displayMetrics
-        return Math.round(px / (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT))
+        return (px / (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 
     fun dpToPx(dp: Int): Int {
         val metrics = Resources.getSystem().displayMetrics
-        return Math.round(dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT))
+        return (dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 
     fun isViewLocatedAtHalfTopOfTheScreen(activity: Activity, targetView: View): Boolean{

@@ -1,9 +1,9 @@
 package com.elconfidencial.bubbleshowcase
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.view.menu.ActionMenuItemView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.view.menu.ActionMenuItemView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
