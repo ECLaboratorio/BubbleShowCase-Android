@@ -49,6 +49,12 @@ class BubbleShowCaseBuilder{
         mTitle = title
         return this
     }
+    
+    internal var mRootView: ViewGroup? = null 
+    fun rootView(rootView: ViewGroup?): BubbleShowCaseBuilder { 
+        mRootView = rootView 
+        return this 
+    }
 
     /**
      * Additional description of the BubbleShowCase. This text has a regular format
