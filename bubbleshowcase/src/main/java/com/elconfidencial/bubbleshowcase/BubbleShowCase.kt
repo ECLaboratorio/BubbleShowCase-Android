@@ -131,6 +131,16 @@ class BubbleShowCase(builder: BubbleShowCaseBuilder){
         }
         notifyDismissToSequenceListener()
     }
+    
+    private val mRootView = builder.mRootView 
+    private fun getViewRoot(activity: Activity): ViewGroup { 
+        return if (mRootView == null) { 
+            val androidContent = activity.findViewById<ViewGroup>(android.R.id.content) 
+            androidContent.parent.parent as ViewGroup 
+        } else { 
+            mRootView 
+        } 
+    } 
 
     fun finishSequence() {
         val rootView = getViewRoot(mActivity.get()!!)
